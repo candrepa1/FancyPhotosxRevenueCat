@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FancyPhotos - RevenueCat Integration Guide</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>FancyPhotos x RevenueCat</h1>
+            <p class="subtitle">How RevenueCat can support your cross-platform subscription needs</p>
+        </div>
+    </header>
+
+    <nav class="nav-bar">
+        <div class="container nav-container">
+            <a href="#" class="nav-link active" data-tab="overview">Overview</a>
+            <a href="#" class="nav-link" data-tab="cross-platform">Cross-platform Subscription Management</a>
+            <a href="#" class="nav-link" data-tab="remote-disable">Dynamic Subscription Management</a>
+            <a href="#" class="nav-link" data-tab="fraud-prevention">Fraud Prevention</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Overview -->
+        <section id="overview" class="tab-content active">
+            <div class="section">
+                <h2>Overview</h2>
+                <div class="video-placeholder">
+                    <!-- Replace with your video embed -->
+                    <p>Video walkthrough coming soon</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenge 1 -->
+        <section id="cross-platform" class="tab-content">
+            <div class="section">
+                <div class="challenge-badge">Challenge 1</div>
+                <h2>Cross-Platform Subscription Management</h2>
+                <p class="challenge-text">Your customers will be able to access their subscription across iOS and Android, with RevenueCat handling the billing and entitlements on both platforms.</p>
+                <div class="content">
+                    <h3>iOS</h3>
+
+                    <h4>Track new purchases</h4>
+                    <p>Connect a store (iOS in this case) and toggle "Track new purchases" in the RevenueCat app settings.</p>
+
+                    <h4>Import historical purchases</h4>
+                    <p>We'd recommend going with a server-side data import: send receipts or purchase tokens via the POST /receipts endpoint.</p>
+                    <p>Client-side data import is possible but not preferred.</p>
+
+                    <h3>Android</h3>
+                    <p>Integrate the SDK to handle purchase/subscription logic.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenge 2 -->
+        <section id="remote-disable" class="tab-content">
+            <div class="section">
+                <div class="challenge-badge">Challenge 2</div>
+                <h2>Dynamic subscription management</h2>
+                <p class="challenge-text">When your AI resources are under heavy load, you'll be able to disable the higher subscription tier remotely — no app update required.</p>
+                <div class="content">
+                    <p>Since the higher subscription tier should be available only at certain times, RevenueCat's scheduling target feature is the perfect fit for your use case.</p>
+
+                    <h3>Targeting by placement with scheduling</h3>
+                    <p>We can use <a href="https://www.revenuecat.com/docs/tools/targeting/placements" target="_blank">placements</a> to define specific rules for specific "places" in your app. We'll use it as a way to identify the AI features section, and target this placement to control which offering to show.</p>
+
+                    <pre><code>else if let offering = Purchases.shared.offerings()?.currentOffering(forPlacement: "ai-tab") {
+    PaywallView(offering: offering)
+}</code></pre>
+
+                    <p>Now we define which offering should be displayed for the "ai-tab" placement:</p>
+
+                    <img src="new-rule-1.png" alt="Targeting rule configuration" class="content-image">
+
+                    <p>We target "any audience" — every user in your app. The breakdown for the "ai-tab" placement:</p>
+
+                    <ul>
+                        <li>Users who are entitled to the AI feature tier already &rarr; get access to features</li>
+                        <li>Users who are entitled to other tiers &rarr; display paywall for AI feature tier</li>
+                        <li>Users who haven't signed up to any tier &rarr; display paywall for AI feature tier</li>
+                    </ul>
+
+                    <p>Then we define that we want to show the "high-power-ai-offering" for the "ai-tab" placement.</p>
+
+                    <p>We also need to define the fallback for all other parts of the app that do not fall within the defined placement. In this case, these are all tiers available below the higher AI subscription tier.</p>
+
+                    <p>Since the higher subscription tier should only be available at certain times, we can set up a schedule for this rule to be active:</p>
+
+                    <img src="new-rule-2.png" alt="Schedule configuration" class="content-image">
+
+                    <p>To put everything together, now we can run some checks:</p>
+
+                    <ul>
+                        <li>When schedule is active &rarr; placement returns "high-power-ai-offering" &rarr; app shows the paywall.</li>
+                        <li>When schedule is inactive &rarr; placement returns no offering &rarr; app shows "Currently unavailable" instead of the paywall.</li>
+                    </ul>
+
+                    <h3>FAQ</h3>
+                    <div class="faq">
+                        <div class="faq-item">
+                            <strong>What happens to existing subscribers when the schedule expires?</strong>
+                            <p>They keep access — their entitlement stays active regardless of the schedule.</p>
+                        </div>
+                        <div class="faq-item">
+                            <strong>Can this be toggled manually outside the schedule?</strong>
+                            <p>Yes, from the RevenueCat dashboard at any time.</p>
+                        </div>
+                        <div class="faq-item">
+                            <strong>How quickly does the change propagate?</strong>
+                            <p>Next time the SDK fetches offerings — typically on app foreground.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenge 3 -->
+        <section id="fraud-prevention" class="tab-content">
+            <div class="section">
+                <div class="challenge-badge">Challenge 3</div>
+                <h2>Fraud Prevention</h2>
+                <p class="challenge-text">Given the cost of your AI compute, here's how we ensure only paying customers get access to those features.</p>
+                <div class="content">
+                    <p>Since users who gain access to the high AI subscription tier are going to be using expensive compute, RevenueCat offers several features to prevent fraud:</p>
+
+                    <h3>1. Receipt Validation</h3>
+                    <p>It is one of RevenueCat's <a href="https://www.revenuecat.com/docs/platform-resources/implementation-responsibilities#backend" target="_blank">implementation responsibilities</a> to verify receipts directly with the app stores, assuring transaction integrity. This comes baked into RevenueCat's backend so there's no action needed from your side.</p>
+
+                    <h3>2. Server-Side Feature Gating</h3>
+                    <p>We can check for the user's entitlements on the client, but there's always a risk of MiTM attacks which can bypass these checks. In order to add an extra protective layer, we recommend adding another check to the server providing your expensive AI compute.</p>
+                    <p>You can use RevenueCat's <a href="https://www.revenuecat.com/docs/api-v2#tag/Customer/operation/list-purchases" target="_blank">REST API</a> to check for a user's active entitlements and grant access that way.</p>
+                    <!-- TODO: show endpoint implementation -->
+
+                    <h3>3. Trusted Entitlements</h3>
+                    <p>MiTM attacks can tamper with request content within the communication with RevenueCat. For that, RevenueCat has built <a href="https://www.revenuecat.com/docs/customers/trusted-entitlements" target="_blank">Trusted Entitlements</a> which helps verify this communication.</p>
+                    <p>After the verification, RevenueCat provides a <code>verificationResult</code> which returns multiple cases that you can then use to make your access logic more robust.</p>
+                    <!-- TODO: describe verification cases briefly -->
+                    <!-- TODO: show SDK implementation -->
+
+                    <h3>4. Refund Handling</h3>
+                    <p>For iOS, you can set up a RevenueCat configuration to handle refund requests automatically.</p>
+                    <p>Given the cost of the AI features, we'd suggest starting with "Always prefer declining refunds" and adjusting based on your refund patterns over time.</p>
+                    <p>RevenueCat will automatically send the user's consumption data to Apple directly in order to help them make informed refund decisions.</p>
+                    <!-- TODO: show screenshots of the process -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Prepared for the FancyPhotos team by the RevenueCat Developer Support Engineering team</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+
+                link.classList.add('active');
+                document.getElementById(link.dataset.tab).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
