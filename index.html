@@ -10,7 +10,7 @@
     <header>
         <div class="container">
             <h1>FancyPhotos x RevenueCat</h1>
-            <p class="subtitle">How RevenueCat can support your cross-platform subscription needs</p>
+            <p class="subtitle">How RevenueCat can support your in-app subscription needs</p>
         </div>
     </header>
 
@@ -62,7 +62,7 @@
             <div class="section">
                 <div class="challenge-badge">Challenge 2</div>
                 <h2>Dynamic subscription management</h2>
-                <p class="challenge-text">When your AI resources are under heavy load, you'll be able to disable the higher subscription tier remotely — no app update required.</p>
+                <p class="challenge-text">When your AI resources are under heavy load, you'll be able to disable the higher subscription tier remotely, with no app update required.</p>
                 <div class="content">
                     <p>Since the higher subscription tier should be available only at certain times, RevenueCat's scheduling target feature is the perfect fit for your use case.</p>
 
@@ -124,29 +124,49 @@
             <div class="section">
                 <div class="challenge-badge">Challenge 3</div>
                 <h2>Fraud Prevention</h2>
-                <p class="challenge-text">Given the cost of your AI compute, here's how we ensure only paying customers get access to those features.</p>
+                <p class="challenge-text">Given the cost of your AI compute, here's how we can work together to ensure only paying customers get access to those features.</p>
                 <div class="content">
-                    <p>Since users who gain access to the high AI subscription tier are going to be using expensive compute, RevenueCat offers several features to prevent fraud:</p>
+                    <p>Here's a high-level view of the fraud prevention strategies covered in this section:</p>
+                    <img src="fraud-diagram.svg" alt="Fraud prevention diagram" class="content-image">
 
                     <h3>1. Receipt Validation</h3>
-                    <p>It is one of RevenueCat's <a href="https://www.revenuecat.com/docs/platform-resources/implementation-responsibilities#backend" target="_blank">implementation responsibilities</a> to verify receipts directly with the app stores, assuring transaction integrity. This comes baked into RevenueCat's backend so there's no action needed from your side.</p>
+                    <p>It is one of RevenueCat's <a href="https://www.revenuecat.com/docs/platform-resources/implementation-responsibilities#backend:~:text=RevenueCat%27s%20backend%20will%20appropriately%20verify%2C%20parse%2C%20and%20validate%20receipts%20associated%20with%20customers%20for%20your%20app" target="_blank">implementation responsibilities</a> to verify receipts directly with the app stores, assuring transaction integrity. This comes baked into RevenueCat's backend so there's no action needed from your side.</p>
 
                     <h3>2. Server-Side Feature Gating</h3>
-                    <p>We can check for the user's entitlements on the client, but there's always a risk of MiTM attacks which can bypass these checks. In order to add an extra protective layer, we recommend adding another check to the server providing your expensive AI compute.</p>
-                    <p>You can use RevenueCat's <a href="https://www.revenuecat.com/docs/api-v2#tag/Customer/operation/list-purchases" target="_blank">REST API</a> to check for a user's active entitlements and grant access that way.</p>
+                    <p>You can verify user entitlements on the client, but there's always a risk that requests are tampered with, causing fraudulent users to bypass these checks.</p>
+                    <p> In order to add an extra protective layer, we recommend adding an entitlement check on the server running your AI compute, using RevenueCat's <a href="https://www.revenuecat.com/docs/api-v2#tag/Customer/operation/list-customer-active-entitlements" target="_blank">/GET active user entitlements endpoint</a> and grant access accordingly.</p>
                     <!-- TODO: show endpoint implementation -->
 
                     <h3>3. Trusted Entitlements</h3>
-                    <p>MiTM attacks can tamper with request content within the communication with RevenueCat. For that, RevenueCat has built <a href="https://www.revenuecat.com/docs/customers/trusted-entitlements" target="_blank">Trusted Entitlements</a> which helps verify this communication.</p>
-                    <p>After the verification, RevenueCat provides a <code>verificationResult</code> which returns multiple cases that you can then use to make your access logic more robust.</p>
-                    <!-- TODO: describe verification cases briefly -->
-                    <!-- TODO: show SDK implementation -->
+                    <p>MiTM attacks can tamper with response content between your app and RevenueCat's servers. For that, RevenueCat has built <a href="https://www.revenuecat.com/docs/customers/trusted-entitlements" target="_blank">Trusted Entitlements</a> which verifies the integrity of these responses on the client side.</p>
+                    <p>After the verification, RevenueCat provides a <code>verificationResult</code>, which you can use to make your access logic more robust:</p>
+                    <ul>
+                        <li><code>.notRequested</code> — No verification was done (verification not enabled in configuration, or iOS &lt; 13.0)</li>
+                        <li><code>.verified</code> — Entitlements were verified with RevenueCat's server</li>
+                        <li><code>.verifiedOnDevice</code> — Entitlements were created and verified on device through StoreKit 2</li>
+                        <li><code>.failed</code> — Verification failed, possibly due to a MiTM attack</li>
+                    </ul>
 
                     <h3>4. Refund Handling</h3>
-                    <p>For iOS, you can set up a RevenueCat configuration to handle refund requests automatically.</p>
-                    <p>Given the cost of the AI features, we'd suggest starting with "Always prefer declining refunds" and adjusting based on your refund patterns over time.</p>
-                    <p>RevenueCat will automatically send the user's consumption data to Apple directly in order to help them make informed refund decisions.</p>
-                    <!-- TODO: show screenshots of the process -->
+
+                    <details class="collapsible">
+                        <summary>App Store</summary>
+                        <div class="collapsible-content">
+                            <div class="prerequisite">
+                                <strong>Prerequisite:</strong> <a href="https://www.revenuecat.com/docs/platform-resources/server-notifications/apple-server-notifications" target="_blank">Apple Server Notifications</a> must be configured.
+                            </div>
+                            <p>There's a <a href="https://www.revenuecat.com/docs/platform-resources/apple-platform-resources/handling-refund-requests#handling-of-refund-requests" target="_blank">RevenueCat configuration</a> to handle refund requests automatically. Given the cost of the AI features, we'd suggest starting with "Always prefer declining refunds" and adjusting based on your refund patterns over time.</p>
+                            <p>RevenueCat will automatically send the user's consumption data to Apple directly in order for them to make informed refund decisions.</p>
+                            <p>Just remember to update the terms and conditions of your app to obtain consent from your customers to share their consumption data with Apple.</p>
+                        </div>
+                    </details>
+
+                    <details class="collapsible">
+                        <summary>Google Play Store</summary>
+                        <div class="collapsible-content">
+                            <p>We recommend handling refunds through the RevenueCat <a href="https://www.revenuecat.com/docs/dashboard-and-metrics/customer-profile#refunding-and-cancelling-purchases" target="_blank">dashboard</a> or the <a href="https://www.revenuecat.com/docs/api-v1#tag/transactions/operation/refund-a-google-subscription" target="_blank">POST /revoke endpoint</a> to ensure access is properly revoked alongside the refund.</p>
+                        </div>
+                    </details>
                 </div>
             </div>
         </section>
