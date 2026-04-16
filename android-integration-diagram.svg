@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#999"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arr-start" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 10 0 L 0 5 L 10 10 z" fill="#999"/>
+    </marker>
+    <marker id="arr-blue-start" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 10 0 L 0 5 L 10 10 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="320" fill="#fafafa" rx="10"/>
+
+  <!-- ===== FancyPhotos Android App ===== -->
+  <rect x="30" y="90" width="220" height="140" rx="10" fill="#fff" stroke="#e0e0e0" stroke-width="1.5"/>
+  <rect x="50" y="84" width="180" height="22" rx="4" fill="#1a1a1a"/>
+  <text x="140" y="99" text-anchor="middle" font-size="8" font-weight="600" fill="#fff">FANCYPHOTOS ANDROID APP</text>
+
+  <!-- App internals -->
+  <rect x="55" y="120" width="170" height="40" rx="6" fill="#1a1a1a"/>
+  <text x="140" y="138" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">App Code</text>
+  <text x="140" y="152" text-anchor="middle" font-size="8" fill="#888">Paywalls, features, UI</text>
+
+  <rect x="55" y="175" width="170" height="40" rx="6" fill="#2563eb"/>
+  <text x="140" y="193" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">RevenueCat SDK</text>
+  <text x="140" y="207" text-anchor="middle" font-size="8" fill="#a0c4ff">Purchases, entitlements</text>
+
+  <!-- ===== RevenueCat Backend ===== -->
+  <rect x="340" y="120" width="220" height="110" rx="10" fill="#eef4ff" stroke="#2563eb" stroke-width="1.5"/>
+  <rect x="360" y="114" width="140" height="22" rx="4" fill="#2563eb"/>
+  <text x="430" y="129" text-anchor="middle" font-size="8" font-weight="600" fill="#fff">REVENUECAT</text>
+
+  <rect x="365" y="170" width="170" height="45" rx="6" fill="#2563eb"/>
+  <text x="450" y="190" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">Backend</text>
+  <text x="450" y="204" text-anchor="middle" font-size="8" fill="#a0c4ff">Validation, targeting, sync</text>
+
+  <!-- ===== Google Play Store ===== -->
+  <rect x="650" y="120" width="220" height="110" rx="10" fill="#fff" stroke="#e0e0e0" stroke-width="1.5"/>
+  <rect x="670" y="114" width="160" height="22" rx="4" fill="#1a1a1a"/>
+  <text x="750" y="129" text-anchor="middle" font-size="8" font-weight="600" fill="#fff">GOOGLE PLAY STORE</text>
+
+  <rect x="675" y="170" width="170" height="45" rx="6" fill="#1a1a1a"/>
+  <text x="760" y="190" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">Billing + Products</text>
+  <text x="760" y="204" text-anchor="middle" font-size="8" fill="#888">Payments, subscriptions</text>
+
+  <!-- ===== Arrows ===== -->
+
+  <!-- App → Google Play (purchases) -->
+  <line x1="250" y1="150" x2="648" y2="150" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#arr)"/>
+  <text x="450" y="162" text-anchor="middle" font-size="7" fill="#999">Purchase flow (via Google Play Billing)</text>
+
+  <!-- SDK ↔ RC Backend (bidirectional) -->
+  <line x1="250" y1="188" x2="358" y2="188" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <line x1="358" y1="192" x2="250" y2="192" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <text x="304" y="205" text-anchor="middle" font-size="7" fill="#2563eb">Entitlements,</text>
+  <text x="304" y="215" text-anchor="middle" font-size="7" fill="#2563eb">offerings</text>
+
+  <!-- RC Backend → Google Play (bidirectional, shared) -->
+  <line x1="560" y1="188" x2="668" y2="188" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+  <line x1="668" y1="192" x2="560" y2="192" stroke="#999" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="614" y="205" text-anchor="middle" font-size="7" fill="#888">Receipt validation,</text>
+  <text x="614" y="215" text-anchor="middle" font-size="7" fill="#888">RTDN</text>
+
+  <!-- Legend -->
+  <g transform="translate(310, 280)">
+    <line x1="0" y1="0" x2="30" y2="0" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="38" y="4" font-size="8" fill="#888">RevenueCat managed</text>
+    <line x1="160" y1="0" x2="190" y2="0" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="198" y="4" font-size="8" fill="#888">Google Play managed</text>
+  </g>
+</svg>

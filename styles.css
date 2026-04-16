@@ -52,7 +52,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 960px;
     margin: 0 auto;
     padding: 0 24px;
 }
@@ -191,9 +191,15 @@ header h1 {
     text-decoration: underline;
 }
 
-.content ul {
+.content ul,
+.content ol {
     margin-bottom: 16px;
     padding-left: 24px;
+}
+
+.content ol > li > h4 {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
 }
 
 .content li {
@@ -285,6 +291,49 @@ header h1 {
     padding: 80px 0;
     text-align: center;
     color: var(--text-muted);
+}
+
+/* Comparison Table */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+}
+
+.comparison-table th {
+    text-align: left;
+    padding: 10px 16px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border);
+    width: 50%;
+}
+
+.comparison-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    width: 50%;
+    vertical-align: top;
+}
+
+.comparison-table td:last-child {
+    color: var(--text);
+}
+
+.table-section-header {
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: var(--badge-bg);
+    color: var(--text-secondary) !important;
+    text-align: left !important;
+    padding: 8px 16px !important;
 }
 
 /* Footer */

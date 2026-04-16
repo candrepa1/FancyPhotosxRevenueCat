@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 380" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#999"/>
+    </marker>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="380" fill="#fafafa" rx="10"/>
+
+  <!-- Column labels -->
+  <text x="100" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#888" letter-spacing="1.2">USER</text>
+  <text x="340" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#2563eb" letter-spacing="1.2">TARGETING</text>
+  <text x="570" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#888" letter-spacing="1.2">OFFERING</text>
+  <text x="790" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="#888" letter-spacing="1.2">RESULT</text>
+
+  <!-- Divider line under labels -->
+  <line x1="30" y1="42" x2="870" y2="42" stroke="#e5e5e5" stroke-width="1"/>
+
+  <!-- ===== ROW 1: No subscription ===== -->
+  <rect x="20" y="60" width="160" height="50" rx="8" fill="#1a1a1a"/>
+  <text x="100" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#fff">No Subscription</text>
+  <text x="100" y="97" text-anchor="middle" font-size="9" fill="#888">New user</text>
+
+  <!-- Arrow to targeting -->
+  <line x1="180" y1="85" x2="248" y2="85" stroke="#999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Targeting box (shared, spans all 3 rows) -->
+  <rect x="255" y="55" width="170" height="270" rx="10" fill="#eef4ff" stroke="#2563eb" stroke-width="1.5"/>
+
+  <!-- Targeting label (pill at top) -->
+  <rect x="280" y="49" width="120" height="22" rx="4" fill="#fff" stroke="#2563eb" stroke-width="1"/>
+  <text x="340" y="64" text-anchor="middle" font-size="8" font-weight="600" fill="#2563eb">Default Fallback</text>
+
+  <!-- Routing labels inside targeting box -->
+  <text x="340" y="85" text-anchor="middle" font-size="8" fill="#6b9aed">no entitlements</text>
+  <text x="340" y="186" text-anchor="middle" font-size="8" fill="#6b9aed">has Pro entitlement</text>
+  <text x="340" y="291" text-anchor="middle" font-size="8" fill="#6b9aed">has Max entitlement</text>
+  <text x="340" y="303" text-anchor="middle" font-size="8" fill="#6b9aed">no Pro entitlement</text>
+
+  <!-- Arrow from targeting to offering row 1 -->
+  <line x1="425" y1="85" x2="478" y2="85" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- Offering: default (for row 1) -->
+  <rect x="485" y="60" width="170" height="50" rx="8" fill="#2563eb"/>
+  <text x="570" y="82" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">default offering</text>
+  <text x="570" y="97" text-anchor="middle" font-size="9" fill="#a0c4ff">Pro tier</text>
+
+  <!-- Arrow to result row 1 -->
+  <line x1="655" y1="85" x2="700" y2="85" stroke="#999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Result: Pro paywall -->
+  <rect x="707" y="60" width="165" height="50" rx="8" fill="#fff" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="789" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a1a">Pro Paywall</text>
+  <text x="789" y="97" text-anchor="middle" font-size="9" fill="#888">Subscribe to Pro</text>
+
+  <!-- ===== ROW 2: Pro subscriber ===== -->
+  <rect x="20" y="165" width="160" height="50" rx="8" fill="#1a1a1a"/>
+  <text x="100" y="187" text-anchor="middle" font-size="11" font-weight="600" fill="#fff">Pro Subscriber</text>
+  <text x="100" y="202" text-anchor="middle" font-size="9" fill="#888">Existing customer</text>
+
+  <!-- Arrow to targeting -->
+  <line x1="180" y1="190" x2="248" y2="190" stroke="#999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Arrow from targeting to result row 2 (skips offering) -->
+  <line x1="425" y1="190" x2="700" y2="190" stroke="#22a855" stroke-width="1.5" stroke-dasharray="6 3" marker-end="url(#arr)"/>
+
+  <!-- Result: Access granted -->
+  <rect x="707" y="165" width="165" height="50" rx="8" fill="#f0fdf4" stroke="#22a855" stroke-width="1"/>
+  <text x="789" y="187" text-anchor="middle" font-size="11" font-weight="600" fill="#16a34a">Access Granted</text>
+  <text x="789" y="202" text-anchor="middle" font-size="9" fill="#888">Already entitled</text>
+
+  <!-- ===== ROW 3: Max subscriber ===== -->
+  <rect x="20" y="270" width="160" height="50" rx="8" fill="#1a1a1a"/>
+  <text x="100" y="292" text-anchor="middle" font-size="11" font-weight="600" fill="#fff">Max Subscriber</text>
+  <text x="100" y="307" text-anchor="middle" font-size="9" fill="#888">Highest AI tier</text>
+
+  <!-- Arrow to targeting -->
+  <line x1="180" y1="295" x2="248" y2="295" stroke="#999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Arrow from targeting to offering row 3 -->
+  <line x1="425" y1="295" x2="478" y2="295" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arr-blue)"/>
+
+  <!-- Offering: default (for row 3) -->
+  <rect x="485" y="270" width="170" height="50" rx="8" fill="#2563eb"/>
+  <text x="570" y="292" text-anchor="middle" font-size="10" font-weight="600" fill="#fff">default offering</text>
+  <text x="570" y="307" text-anchor="middle" font-size="9" fill="#a0c4ff">Pro tier</text>
+
+  <!-- Arrow to result row 3 -->
+  <line x1="655" y1="295" x2="700" y2="295" stroke="#999" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Result: Pro paywall -->
+  <rect x="707" y="270" width="165" height="50" rx="8" fill="#fff" stroke="#e5e5e5" stroke-width="1"/>
+  <text x="789" y="292" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a1a">Pro Paywall</text>
+  <text x="789" y="307" text-anchor="middle" font-size="9" fill="#888">Subscribe to Pro</text>
+</svg>
